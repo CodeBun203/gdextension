@@ -1,12 +1,12 @@
+#SConstruct
 #!/usr/bin/env python
 import os
 import sys
 
 from methods import print_error
 
-
-libname = "EXTENSION-NAME"
-projectdir = "demo"
+libname = "godotcon2024"
+projectdir = "tag!-royale"
 
 localEnv = Environment(tools=["default"], PLATFORM="")
 
@@ -37,6 +37,14 @@ env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
 
 env.Append(CPPPATH=["src/"])
 sources = Glob("src/*.cpp")
+
+# Platform-specific configurations
+if env["PLATFORM"] == "win32":
+    env.Append(CPPDEFINES=["_WIN32"])
+    env.Append(CPPPATH=["C:/path/to/godot-cpp/include", "C:/path/to/godot-cpp/gen/include"])
+    env.Append(LIBS=["Ws2_32"])
+else:
+    env.Append(CPPPATH=["/path/to/godot-cpp/include", "/path/to/godot-cpp/gen/include"])
 
 if env["target"] in ["editor", "template_debug"]:
     try:

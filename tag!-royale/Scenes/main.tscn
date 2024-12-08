@@ -1,0 +1,3738 @@
+[gd_scene load_steps=17 format=3 uid="uid://conaadk58wd64"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_axvio"]
+[ext_resource type="PackedScene" uid="uid://btbxdjf3qr2ri" path="res://Scenes/ground.tscn" id="4_307cx"]
+[ext_resource type="FontFile" uid="uid://cp482q34u634u" path="res://Fonts/wheaton capitals.otf" id="4_tq5r7"]
+[ext_resource type="PackedScene" uid="uid://bwoy31xtotfo4" path="res://Scenes/gem.tscn" id="5_4lfyu"]
+[ext_resource type="PackedScene" uid="uid://jhbkm1vhm8yp" path="res://Scenes/ramp.tscn" id="5_jwac8"]
+[ext_resource type="PackedScene" uid="uid://c3hgjtofl336o" path="res://Scenes/windmill.tscn" id="7_43bib"]
+[ext_resource type="Environment" uid="uid://137ig865cndy" path="res://Environments/Cloudy_Reflective.tres" id="7_sfg4c"]
+[ext_resource type="AudioStream" uid="uid://bbuugpro07583" path="res://Music/BackgrounMusic.wav" id="10_k2rvf"]
+[ext_resource type="PackedScene" uid="uid://b6xyly1aopakk" path="res://Scenes/spawn_point.tscn" id="11_ykfin"]
+[ext_resource type="PackedScene" uid="uid://i06etcv7nxwt" path="res://Scenes/lobby.tscn" id="12_7xdgi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2csfp"]
+albedo_color = Color(0.3712, 0.264, 0.8, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ar16"]
+material = SubResource("StandardMaterial3D_2csfp")
+size = Vector3(10, 5, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iq8o4"]
+size = Vector3(10, 5, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2nje"]
+albedo_color = Color(0.133333, 0.584314, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k00nw"]
+material = SubResource("StandardMaterial3D_i2nje")
+size = Vector3(1, 10, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6tgv1"]
+size = Vector3(1, 10, 5)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_axvio")
+gem_scene = ExtResource("5_4lfyu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("7_sfg4c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.913148, 0.407428, 0.012798, -0.0432259, 0.0655655, 0.996911, 0.40533, -0.910881, 0.0774824, -7, 7, -5)
+light_color = Color(1, 0.882353, 0.831373, 1)
+light_energy = 2.0
+light_indirect_energy = 2.0
+shadow_enabled = true
+shadow_opacity = 0.89
+shadow_blur = 10.0
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" type="ColorRect" parent="UserInterface"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0053, 1)
+color = Color(0.211765, 0.211765, 0.211765, 0.521569)
+
+[node name="Resume" type="Button" parent="UserInterface/PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -107.248
+offset_top = 248.0
+offset_right = -19.2485
+offset_bottom = 294.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("4_tq5r7")
+text = "Resume"
+
+[node name="Save" type="Button" parent="UserInterface/PauseMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.248
+offset_top = -28.0
+offset_right = -19.2485
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+text = "Save"
+
+[node name="Quit" type="Button" parent="UserInterface/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.248
+offset_top = -28.0
+offset_right = -19.2485
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("4_tq5r7")
+text = "Quit"
+
+[node name="Load" type="Button" parent="UserInterface/PauseMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -107.248
+offset_top = -320.0
+offset_right = -19.2485
+offset_bottom = -274.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2, 2)
+text = "Load"
+
+[node name="Bridges" type="Node3D" parent="."]
+
+[node name="Bridge" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.3791, 0.855167, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge15" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge15"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge16" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge16"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge16"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge17" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge17"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge17"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge18" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge18"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge18"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge19" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge19"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge19"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge20" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge20"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge20"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge21" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge21"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge21"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge22" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge22"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge22"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge23" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge23"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge23"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge24" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge24"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge24"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge25" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 0.855167, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge25"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge25"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge27" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge27"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge27"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge28" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge28"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge28"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge29" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge29"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge29"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge30" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge30"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge30"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge31" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge31"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge31"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge32" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge32"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge32"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge33" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge33"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge33"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge34" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge34"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge34"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge35" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 0.855167, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge35"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge35"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge36" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge36"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge36"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge37" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge37"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge37"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge38" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge38"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge38"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge39" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge39"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge39"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge40" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge40"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge40"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge41" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge41"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge41"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge42" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge42"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge42"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge43" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge43"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge43"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge44" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge44"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge44"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge45" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge45"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge45"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge46" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 0.855167, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge46"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge46"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge48" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge48"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge48"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge49" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge49"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge49"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge50" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge50"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge50"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge51" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge51"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge51"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge52" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge52"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge52"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge53" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge53"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge53"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge54" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge54"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge54"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge55" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge55"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge55"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge56" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 0.855167, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge56"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge56"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge26" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge26"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge47" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge47"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge47"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge57" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge57"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge57"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge58" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge58"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge58"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge59" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge59"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge59"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge60" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge60"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge60"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge61" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge61"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge61"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge62" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge62"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge62"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge63" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge63"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge63"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge64" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge64"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge64"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge65" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 6.85517, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge65"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge65"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge66" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge66"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge66"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge67" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge67"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge67"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge68" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge68"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge68"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge69" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge69"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge69"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge70" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge70"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge70"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge71" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge71"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge71"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge72" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge72"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge72"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge73" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge73"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge73"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge74" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 6.85517, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge74"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge74"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge75" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge75"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge75"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge76" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge76"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge76"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge77" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge77"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge77"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge78" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge78"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge78"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge79" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge79"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge79"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge80" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge80"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge80"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge81" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge81"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge81"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge82" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge82"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge82"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge83" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge83"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge83"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge84" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge84"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge84"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge85" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 6.85517, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge85"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge85"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge86" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge86"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge86"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge87" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge87"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge87"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge88" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge88"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge88"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge89" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge89"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge89"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge90" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge90"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge90"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge91" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge91"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge91"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge92" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge92"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge92"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge93" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge93"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge93"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge94" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 6.85517, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge94"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge94"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge95" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge95"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge95"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge96" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge96"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge96"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge97" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge97"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge97"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge98" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge98"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge98"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge99" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge99"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge99"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge100" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge100"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge100"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge101" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge101"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge101"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge102" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge102"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge102"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge103" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge103"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge103"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge104" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge104"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge104"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge105" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 12.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge105"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge105"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge106" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge106"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge106"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge107" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge107"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge107"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge108" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge108"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge108"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge109" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge109"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge109"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge110" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge110"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge110"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge111" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge111"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge111"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge112" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge112"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge112"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge113" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge113"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge113"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge114" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 12.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge114"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge114"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge115" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge115"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge115"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge116" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge116"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge116"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge117" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge117"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge117"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge118" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge118"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge118"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge119" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge119"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge119"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge120" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge120"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge120"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge121" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge121"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge121"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge122" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge122"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge122"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge123" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge123"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge123"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge124" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge124"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge124"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge125" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 12.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge125"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge125"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge126" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge126"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge126"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge127" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge127"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge127"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge128" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge128"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge128"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge129" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge129"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge129"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge130" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge130"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge130"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge131" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge131"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge131"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge132" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge132"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge132"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge133" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge133"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge133"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge134" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 12.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge134"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge134"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge135" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge135"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge135"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge136" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge136"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge136"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge137" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge137"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge137"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge138" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge138"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge138"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge139" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge139"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge139"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge140" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge140"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge140"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge141" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge141"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge141"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge142" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge142"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge142"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge143" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge143"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge143"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge144" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge144"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge144"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge145" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 18.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge145"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge145"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge146" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge146"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge146"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge147" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge147"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge147"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge148" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge148"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge148"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge149" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge149"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge149"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge150" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge150"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge150"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge151" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge151"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge151"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge152" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge152"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge152"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge153" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge153"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge153"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge154" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 18.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge154"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge154"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge155" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge155"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge155"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge156" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge156"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge156"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge157" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge157"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge157"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge158" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge158"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge158"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge159" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge159"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge159"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge160" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge160"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge160"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge161" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge161"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge161"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge162" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge162"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge162"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge163" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge163"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge163"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge164" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge164"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge164"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge165" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 18.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge165"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge165"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge166" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge166"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge166"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge167" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge167"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge167"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge168" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge168"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge168"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge169" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge169"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge169"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge170" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge170"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge170"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge171" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge171"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge171"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge172" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge172"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge172"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge173" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge173"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge173"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge174" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 18.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge174"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge174"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge175" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge175"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge175"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge176" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge176"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge176"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge177" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge177"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge177"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge178" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge178"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge178"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge179" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge179"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge179"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge180" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge180"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge180"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge181" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge181"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge181"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge182" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge182"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge182"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge183" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge183"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge183"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge184" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge184"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge184"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge185" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 24.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge185"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge185"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge186" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge186"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge186"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge187" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge187"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge187"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge188" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge188"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge188"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge189" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge189"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge189"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge190" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge190"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge190"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge191" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge191"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge191"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge192" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge192"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge192"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge193" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge193"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge193"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge194" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 24.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge194"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge194"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge195" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge195"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge195"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge196" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge196"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge196"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge197" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge197"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge197"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge198" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge198"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge198"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge199" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge199"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge199"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge200" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge200"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge200"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge201" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge201"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge201"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge202" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge202"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge202"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge203" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge203"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge203"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge204" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge204"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge204"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge205" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 24.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge205"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge205"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge206" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge206"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge206"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge207" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge207"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge207"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge208" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge208"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge208"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge209" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge209"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge209"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge210" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge210"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge210"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge211" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge211"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge211"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge212" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge212"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge212"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge213" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge213"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge213"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge214" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 24.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge214"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge214"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge215" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge215"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge215"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge216" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge216"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge216"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge217" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge217"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge217"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge218" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge218"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge218"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge219" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge219"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge219"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge220" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge220"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge220"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge221" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge221"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge221"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge222" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge222"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge222"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge223" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge223"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge223"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge224" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge224"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge224"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge225" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 30.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge225"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge225"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge226" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge226"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge226"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge227" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge227"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge227"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge228" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge228"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge228"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge229" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge229"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge229"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge230" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge230"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge230"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge231" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge231"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge231"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge232" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge232"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge232"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge233" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge233"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge233"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge234" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 30.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge234"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge234"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge235" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge235"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge235"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge236" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge236"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge236"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge237" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge237"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge237"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge238" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge238"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge238"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge239" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge239"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge239"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge240" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge240"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge240"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge241" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge241"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge241"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge242" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge242"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge242"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge243" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge243"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge243"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge244" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge244"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge244"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge245" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 30.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge245"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge245"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge246" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge246"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge246"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge247" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge247"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge247"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge248" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge248"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge248"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge249" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge249"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge249"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge250" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge250"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge250"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge251" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge251"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge251"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge252" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge252"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge252"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge253" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge253"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge253"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge254" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 30.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge254"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge254"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge255" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.3791, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge255"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge255"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge256" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge256"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge256"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge257" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge257"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge257"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge258" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge258"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge258"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge259" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge259"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge259"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge260" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge260"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge260"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge261" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge261"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge261"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge262" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge262"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge262"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge263" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge263"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge263"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge264" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge264"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge264"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge265" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47.3791, 36.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge265"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge265"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge266" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -39.6209, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge266"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge266"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge267" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29.6209, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge267"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge267"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge268" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -19.6209, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge268"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge268"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge269" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.6209, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge269"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge269"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge270" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.379097, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge270"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge270"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge271" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10.3791, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge271"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge271"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge272" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20.3791, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge272"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge272"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge273" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 30.3791, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge273"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge273"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge274" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 40.3791, 36.8552, 47.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge274"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge274"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge275" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, 44.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge275"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge275"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge276" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, 34.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge276"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge276"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge277" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, 24.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge277"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge277"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge278" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, 14.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge278"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge278"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge279" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, 4.9299)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge279"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge279"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge280" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -5.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge280"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge280"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge281" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -15.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge281"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge281"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge282" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -25.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge282"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge282"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge283" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge283"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge283"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge284" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -35.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge284"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge284"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge285" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46.6209, 36.8552, -45.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge285"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge285"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge286" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 30.3791, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge286"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge286"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge287" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 20.3791, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge287"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge287"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge288" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10.3791, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge288"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge288"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge289" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0.379089, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge289"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge289"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge290" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9.62091, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge290"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge290"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge291" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -19.6209, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge291"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge291"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge292" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge292"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge292"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge293" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -29.6209, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge293"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge293"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge294" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -39.6209, 36.8552, -48.0701)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge294"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge294"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge7" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7753, 15.3515, 22.3467)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge7"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge7"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge11" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5695, 15.2817, -16.3907)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge11"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge11"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge4" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 23.3652, 2.73947, 0.254911)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge4"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge4"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge12" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -5.39797, 20.9553, -13.3132)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge12"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge12"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge13" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -5.39797, 23.7551, -23.1894)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge13"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge13"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge14" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 8.7885, 25.6457, -23.1894)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge14"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge14"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge5" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 23.1378, 13.4732, 22.5139)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge5"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge5"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge6" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 8.44148, 16.6245, 12.2162)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge2" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, 23.2333, 0.855168, -22.0636)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge2"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge2"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge8" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, -27.3142, 15.2833, 19.3126)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge8"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge8"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge295" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, -42.3038, 21.793, 36.8476)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge295"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge295"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge296" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.3038, 21.793, 43.8476)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge296"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge296"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge297" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.3366, 21.793, 43.8476)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge297"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge297"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge9" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, -27.3142, 15.2833, -3.43783)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge9"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge9"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge10" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, -27.3142, 15.2833, -13.4683)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge10"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge10"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Bridge3" type="StaticBody3D" parent="Bridges"]
+transform = Transform3D(-0.00197224, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00197224, 23.2333, 0.855168, -12.064)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bridges/Bridge3"]
+mesh = SubResource("BoxMesh_7ar16")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bridges/Bridge3"]
+shape = SubResource("BoxShape3D_iq8o4")
+
+[node name="Windmill" parent="." instance=ExtResource("7_43bib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87688, 18.4262, 22.4768)
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Wall" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5342, 11.3234, -0.429581)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall"]
+mesh = SubResource("BoxMesh_k00nw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall"]
+shape = SubResource("BoxShape3D_6tgv1")
+
+[node name="Wall3" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.0121, 19.6221, 7.82009)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall3"]
+mesh = SubResource("BoxMesh_k00nw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall3"]
+shape = SubResource("BoxShape3D_6tgv1")
+
+[node name="Wall2" type="StaticBody3D" parent="Walls"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 23.0626, 12.7009, 2.98573)
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall2"]
+mesh = SubResource("BoxMesh_k00nw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall2"]
+shape = SubResource("BoxShape3D_6tgv1")
+
+[node name="Ramps" type="Node3D" parent="."]
+
+[node name="Ramp" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 4, 5.71716, 0.0563827, -25.0781)
+
+[node name="Ramp5" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, -0.000111058, -21.0781)
+
+[node name="Ramp6" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, 3.99989, -12.0781)
+
+[node name="Ramp7" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, 8.3358, -2.18702)
+
+[node name="Ramp8" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, 12.6704, 7.60965)
+
+[node name="Ramp9" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, 16.9363, 17.4257)
+
+[node name="Ramp10" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, -42.2828, 20.9294, 26.5049)
+
+[node name="Ramp11" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, 27.4948, -0.000110626, 43.6995)
+
+[node name="Ramp12" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, 18.4948, 3.99989, 43.6995)
+
+[node name="Ramp13" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, 8.60368, 8.3358, 43.6995)
+
+[node name="Ramp14" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, -1.19298, 12.6704, 43.6995)
+
+[node name="Ramp15" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, -11.009, 16.9363, 43.6995)
+
+[node name="Ramp16" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-2, 0, 3.49691e-07, 0, 2, 0, -1.74846e-07, 0, -4, -20.0883, 20.9294, 43.6995)
+
+[node name="Ramp4" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 4, -21.2188, 18.7491, -16.4304)
+
+[node name="Ramp2" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, 23.3338, 4.41615, -12.7554)
+
+[node name="Ramp3" parent="Ramps" instance=ExtResource("5_jwac8")]
+transform = Transform3D(-8.74228e-08, 0, -4, 0, 2, 0, 2, 0, -1.74846e-07, 23.1573, 14.0667, 11.8675)
+
+[node name="Ground" parent="." instance=ExtResource("4_307cx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.062, -1, -0.087)
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="TagTimer" type="Timer" parent="."]
+wait_time = 15.0
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_k2rvf")
+volume_db = -18.667
+autoplay = true
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="SpawnPoint" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+visible = false
+
+[node name="SpawnPoint2" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+visible = false
+
+[node name="SpawnPoint3" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+visible = false
+
+[node name="SpawnPoint4" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+visible = false
+
+[node name="SpawnPoint5" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0)
+visible = false
+
+[node name="SpawnPoint6" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 12)
+visible = false
+
+[node name="SpawnPoint7" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 12)
+visible = false
+
+[node name="SpawnPoint8" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 8)
+visible = false
+
+[node name="SpawnPoint9" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 8)
+visible = false
+
+[node name="SpawnPoint10" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+visible = false
+
+[node name="SpawnPoint11" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+visible = false
+
+[node name="SpawnPoint12" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+visible = false
+
+[node name="SpawnPoint13" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 0)
+visible = false
+
+[node name="SpawnPoint14" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 12)
+visible = false
+
+[node name="SpawnPoint15" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 12)
+visible = false
+
+[node name="SpawnPoint16" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 12)
+visible = false
+
+[node name="SpawnPoint17" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 12)
+visible = false
+
+[node name="SpawnPoint18" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 12)
+visible = false
+
+[node name="SpawnPoint19" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+visible = false
+
+[node name="SpawnPoint20" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+visible = false
+
+[node name="SpawnPoint21" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+visible = false
+
+[node name="SpawnPoint22" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
+visible = false
+
+[node name="SpawnPoint23" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
+visible = false
+
+[node name="SpawnPoint24" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 4)
+visible = false
+
+[node name="SpawnPoint25" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
+visible = false
+
+[node name="SpawnPoint26" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 16)
+visible = false
+
+[node name="SpawnPoint27" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 16)
+visible = false
+
+[node name="SpawnPoint28" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 12)
+visible = false
+
+[node name="SpawnPoint29" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 12)
+visible = false
+
+[node name="SpawnPoint30" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4)
+visible = false
+
+[node name="SpawnPoint31" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 4)
+visible = false
+
+[node name="SpawnPoint32" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 4)
+visible = false
+
+[node name="SpawnPoint33" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 4)
+visible = false
+
+[node name="SpawnPoint34" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 16)
+visible = false
+
+[node name="SpawnPoint35" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 16)
+visible = false
+
+[node name="SpawnPoint36" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 16)
+visible = false
+
+[node name="SpawnPoint37" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 16)
+visible = false
+
+[node name="SpawnPoint38" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16)
+visible = false
+
+[node name="SpawnPoint39" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 8)
+visible = false
+
+[node name="SpawnPoint40" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 8)
+visible = false
+
+[node name="SpawnPoint41" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8)
+visible = false
+
+[node name="SpawnPoint42" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 8)
+visible = false
+
+[node name="SpawnPoint43" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 8)
+visible = false
+
+[node name="SpawnPoint44" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 16)
+visible = false
+
+[node name="SpawnPoint45" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 12)
+visible = false
+
+[node name="SpawnPoint46" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 16)
+visible = false
+
+[node name="SpawnPoint47" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 16)
+visible = false
+
+[node name="SpawnPoint48" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 8)
+visible = false
+
+[node name="SpawnPoint49" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8)
+visible = false
+
+[node name="SpawnPoint50" parent="SpawnPoints" instance=ExtResource("11_ykfin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 8)
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Lobby" parent="CanvasLayer" instance=ExtResource("12_7xdgi")]
+z_index = 200
+z_as_relative = false
+
+[connection signal="pressed" from="UserInterface/PauseMenu/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="UserInterface/PauseMenu/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="UserInterface/PauseMenu/Quit" to="CanvasLayer/Lobby" method="_on_quit_pressed"]
+[connection signal="pressed" from="UserInterface/PauseMenu/Load" to="." method="_on_load_pressed"]
+[connection signal="timeout" from="TagTimer" to="." method="_on_tag_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="addPlayer" from="CanvasLayer/Lobby" to="." method="_on_lobby_add_player"]
+[connection signal="explode" from="CanvasLayer/Lobby" to="." method="_on_lobby_explode"]
+[connection signal="isServer" from="CanvasLayer/Lobby" to="." method="_on_lobby_is_server"]
+[connection signal="startGame" from="CanvasLayer/Lobby" to="." method="_on_lobby_start_game"]
+[connection signal="tag" from="CanvasLayer/Lobby" to="." method="_on_lobby_tag"]
+[connection signal="updateRemoteData" from="CanvasLayer/Lobby" to="." method="_on_lobby_update_remote_data"]
+[connection signal="windmill" from="CanvasLayer/Lobby" to="." method="_on_lobby_windmill"]
+[connection signal="won" from="CanvasLayer/Lobby" to="." method="_on_lobby_won"]

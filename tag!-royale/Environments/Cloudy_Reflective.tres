@@ -1,0 +1,19 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://137ig865cndy"]
+
+[ext_resource type="Texture2D" uid="uid://cqw3mclahbsq8" path="res://Artwork/industrial_sunset_02_puresky_2k.hdr" id="1_u3lkk"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1otqy"]
+panorama = ExtResource("1_u3lkk")
+energy_multiplier = 0.5
+
+[sub_resource type="Sky" id="Sky_xuihf"]
+sky_material = SubResource("PanoramaSkyMaterial_1otqy")
+
+[resource]
+background_mode = 2
+background_energy_multiplier = 1.2
+sky = SubResource("Sky_xuihf")
+ambient_light_color = Color(0.4425, 0.528542, 0.59, 1)
+ambient_light_sky_contribution = 0.29
+tonemap_mode = 2
+tonemap_white = 16.0

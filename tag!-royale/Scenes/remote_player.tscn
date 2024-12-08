@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://hxgmxxcmx2f8"]
+
+[ext_resource type="Script" path="res://Scripts/remote_player.gd" id="1_wnwrp"]
+[ext_resource type="AudioStream" uid="uid://b6ho5mwc4w2je" path="res://SFX/Pop.wav" id="2_c4yra"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aptmf"]
+albedo_color = Color(0.254902, 0.301961, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lk2ty"]
+material = SubResource("StandardMaterial3D_aptmf")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5j484"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yd0aj"]
+
+[node name="RemotePlayer" type="StaticBody3D" groups=["Player"]]
+collision_mask = 6
+script = ExtResource("1_wnwrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_lk2ty")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5j484")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_yd0aj")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_c4yra")
+unit_size = 2.67
+max_distance = 150.0
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

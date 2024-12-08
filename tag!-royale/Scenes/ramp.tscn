@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://jhbkm1vhm8yp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l2wte"]
+albedo_color = Color(1, 0.413121, 0.111998, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_368pw"]
+material = SubResource("StandardMaterial3D_l2wte")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5svt"]
+albedo_color = Color(1, 0.411765, 0.113725, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ufrke"]
+material = SubResource("StandardMaterial3D_h5svt")
+
+[node name="Ramp" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.576098, -4.25051, 0, 2.23339, -1.09641, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("PrismMesh_368pw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.23, 0, 0, 0, 1, 2.329, 0.546, 0)
+mesh = SubResource("BoxMesh_ufrke")
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+polygon = PackedVector2Array(1.83612, 1.66291, -2.111, -0.543277, 2.82459, -0.57344, 2.82585, 1.66892)

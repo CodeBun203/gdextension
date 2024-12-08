@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwoy31xtotfo4"]
+
+[ext_resource type="Script" path="res://Scripts/gem.gd" id="1_i0sth"]
+[ext_resource type="AudioStream" uid="uid://o0e3gr25gb12" path="res://SFX/Gem.wav" id="2_4ciag"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pru1x"]
+albedo_color = Color(0.513482, 1, 0.364561, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1m177"]
+material = SubResource("StandardMaterial3D_pru1x")
+
+[sub_resource type="Animation" id="Animation_uxf7d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fk5jf"]
+resource_name = "spin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_33ams"]
+_data = {
+"RESET": SubResource("Animation_uxf7d"),
+"spin": SubResource("Animation_fk5jf")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oi88f"]
+
+[node name="Gem" type="Area3D" groups=["Item"]]
+script = ExtResource("1_i0sth")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.810644, -0.349429, 0.469846, 0.581246, 0.577202, -0.573576, -0.0707724, 0.738063, 0.67101, 0, 0, 0)
+mesh = SubResource("BoxMesh_1m177")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." groups=["Item"]]
+libraries = {
+"": SubResource("AnimationLibrary_33ams")
+}
+autoplay = "spin"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.811859, -0.346597, 0.469846, 0.579228, 0.579228, -0.573576, -0.0733483, 0.737811, 0.67101, -0.000956774, -0.0058217, 0.000583887)
+shape = SubResource("BoxShape3D_oi88f")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_4ciag")
+volume_db = -22.667
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

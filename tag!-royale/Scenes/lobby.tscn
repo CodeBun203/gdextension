@@ -1,0 +1,174 @@
+[gd_scene load_steps=3 format=3 uid="uid://i06etcv7nxwt"]
+
+[ext_resource type="Script" path="res://Scripts/lobby.gd" id="1_osycu"]
+[ext_resource type="FontFile" uid="uid://cp482q34u634u" path="res://Fonts/wheaton capitals.otf" id="2_j5bdy"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_osycu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+layout_mode = 0
+offset_left = -40.0
+offset_top = -16.0
+offset_right = 1472.0
+offset_bottom = 952.0
+
+[node name="ClientsWaitingLabel" type="Label" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -316.0
+offset_top = 256.0
+offset_right = 316.0
+offset_bottom = 424.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Clients in Lobby: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -316.0
+offset_top = 152.0
+offset_right = 330.0
+offset_bottom = 289.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 100
+text = "Tag! Royale"
+
+[node name="Start" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -4.0
+offset_right = 127.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Start Server"
+
+[node name="Join" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = 156.0
+offset_right = 120.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Join Server"
+
+[node name="Back" type="Button" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_left = 72.0
+offset_top = 800.0
+offset_right = 182.0
+offset_bottom = 869.0
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Back"
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -15.5
+offset_right = 100.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.01054, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+placeholder_text = "Type IP Here"
+max_length = 16
+
+[node name="JoinLabel" type="Label" parent="ColorRect"]
+visible = false
+layout_mode = 0
+offset_left = 464.0
+offset_top = 304.0
+offset_right = 1066.0
+offset_bottom = 429.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Enter Server IP below.
+Press Enter Key when ready."
+horizontal_alignment = 1
+
+[node name="FailedLabel" type="Label" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = 100.0
+offset_right = 253.0
+offset_bottom = 161.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Could Not connect to IP:
+"
+
+[node name="StartLabel" type="Label" parent="ColorRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -27.0
+offset_right = 330.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_j5bdy")
+theme_override_font_sizes/font_size = 44
+text = "Press Enter To Start Game"
+
+[connection signal="pressed" from="ColorRect/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="ColorRect/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="ColorRect/Back" to="." method="_on_back_pressed"]
+[connection signal="text_submitted" from="ColorRect/LineEdit" to="." method="_on_line_edit_text_submitted"]

@@ -5,7 +5,7 @@ import sys
 
 from methods import print_error
 
-libname = "godotcon2024"
+libname = "tagroyale"
 projectdir = "tag!-royale"
 
 localEnv = Environment(tools=["default"], PLATFORM="")

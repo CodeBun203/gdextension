@@ -27,7 +27,7 @@ This repository **does not** include the full GDExtension wrapper code. To get t
 1.  **Clone the Godot C++ Template:**
     Start by cloning the official Godot C++ template repository. This contains the necessary boilerplate to link a C++ library with Godot.
     ```bash
-    git clone [https://github.com/godotengine/godot-cpp-template.git](https://github.com/godotengine/godot-cpp-template.git)
+    git clone https://github.com/godotengine/godot-cpp-template.git
     ```
 
 2.  **Add Project Files:**
